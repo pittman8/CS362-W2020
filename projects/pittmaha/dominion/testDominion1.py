@@ -21,7 +21,7 @@ else:
 nC = -10 + 10 * len(player_names)
 
 #Define box
-box = testUtility.TheBox(nV)
+box = testUtility.TheBox(nV - nC)
 
 #Pick 10 cards from box to be in the supply.
 boxlist = [k for k in box]
