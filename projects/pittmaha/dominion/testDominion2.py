@@ -32,18 +32,25 @@ supply = defaultdict(list,[(k,box[k]) for k in random10])
 
 #The supply always has these cards
 supply = testUtility.TheSupply(supply, nV, nC, player_names)
+supply_order = testUtility.PrintSupplyOrder()
+
+for value in supply_order:
+    print(value)
+    for stack in supply_order[value]:
+        if stack in supply:
+            print(stack, len(supply[stack]))
 
 #initialize the trash
 trash = []
 
 #Costruct the Player objects
-players = testUtility.ThePlayers(player_names)
+players = testUtility.ThePlayers()
 
 #Play the game
 turn  = 0
 while not Dominion.gameover(supply):
     turn += 1
-    testUtility.PrintSupplyOrder(supply)
+    testUtility.PrintSupplyOrder()
     testUtility.PrintPlayers(players, supply, trash, turn)
 
 #Final score

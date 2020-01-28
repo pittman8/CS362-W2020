@@ -1,4 +1,6 @@
 import Dominion
+import random
+from collections import defaultdict
 
 def TheBox(nV):
     box = {}
@@ -29,7 +31,12 @@ def TheBox(nV):
     box["Throne Room"]=[Dominion.Throne_Room()]*10
     return box
 
-def TheSupply(supply, nV, nC, player_names):
+
+def TheSupply(box, nV, nC, player_names):
+    boxlist = [k for k in box]
+    random.shuffle(boxlist)
+    random10 = boxlist[:10]
+    supply = defaultdict(list, [(k, box[k]) for k in random10])
     supply["Copper"] = [Dominion.Copper()] * (60 - len(player_names) * 7)
     supply["Silver"] = [Dominion.Silver()] * 40
     supply["Gold"] = [Dominion.Gold()] * 30
@@ -39,7 +46,19 @@ def TheSupply(supply, nV, nC, player_names):
     supply["Curse"] = [Dominion.Curse()] * nC
     return supply
 
-def ThePlayers(player_names):
+def GetCurses(player_names):
+    nC = -10 + 10 * len(player_names)
+    return nC
+
+def GetVictoryCards(player_names):
+    if len(player_names) > 2:
+        nV = 12
+    else:
+        nV = 8
+    return nV
+
+def ThePlayers():
+    player_names = ["Annie", "*Ben", "*Carla"]
     players = []
     for name in player_names:
         if name[0] == "*":
@@ -63,7 +82,7 @@ def TheWinners(vp, vpmax):
     print("\nGAME OVER!!!\n" + winstring + "\n")
     return winners
 
-def PrintSupplyOrder(supply):
+def PrintSupplyOrder():
     supply_order = {0: ['Curse', 'Copper'], 2: ['Estate', 'Cellar', 'Chapel', 'Moat'],
                     3: ['Silver', 'Chancellor', 'Village', 'Woodcutter', 'Workshop'],
                     4: ['Gardens', 'Bureaucrat', 'Feast', 'Militia', 'Moneylender', 'Remodel', 'Smithy', 'Spy', 'Thief',
@@ -71,11 +90,7 @@ def PrintSupplyOrder(supply):
                     5: ['Duchy', 'Market', 'Council Room', 'Festival', 'Laboratory', 'Library', 'Mine', 'Witch'],
                     6: ['Gold', 'Adventurer'], 8: ['Province']}
     print("\r")
-    for value in supply_order:
-        print(value)
-        for stack in supply_order[value]:
-            if stack in supply:
-                print(stack, len(supply[stack]))
+    return supply_order
 
 def PrintPlayers(players, supply, trash, turn):
     print("\r")
