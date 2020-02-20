@@ -1,7 +1,7 @@
 # CS362 Assignment 4
 # Classroom Manager
 
-#Student class
+# Student class
 class Student:
     def __init__(self, id, first_name, last_name):
         self.id = 0
@@ -39,7 +39,8 @@ class Student:
             if a.name == 'name':
                 del name
 
-#Assignment class
+
+# Assignment class
 class Assignment:
     def __init__(self, name, max_score):
         self.name = name
